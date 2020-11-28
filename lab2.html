@@ -9,7 +9,7 @@
 </head>
 <body>
     <p>
-        <select id = "left">
+        <select id = "left" onchange="select_on_change()">
             <option>1</option>
             <option>2</option>
             <option>3</option>
@@ -18,6 +18,49 @@
         <select id = "right">
 
         </select>
-        <button id = "delete">delete</button>
+        <button id = "delete" onclick="delete_option()">delete</button>
     </p>
+    <p>
+        <button id = "deliver" onclick="deliver_click()">deliver</button>
+    </p>
+    <script type="text/javascript">
+        var left = document.getElementById("left");
+        var right = document.getElementById("right");
+        var delete_btn = document.getElementById("delete");
+        var deliver_btn = document.getElementById("deliver");
+        
+        function select_on_change()
+        {
+            var n = left.options.selectedIndex;
+            var selectedOptionText = left.options[n].text;
+            for (var i = 0; i < right.options.length; i+=1)
+            {
+                if (right.options[i].text == selectedOptionText)
+                {
+                    right.options.selectedIndex = i;
+                    return;
+                }
+            }
+            var n1 = right.options.length;
+            right.appendChild(new Option(selectedOptionText));
+            right.selectedIndex = n1;
+        }
+        
+        function delete_option()
+        {
+            var n = right.options.selectedIndex;
+            right.remove(n);
+        }
+
+        function deliver_click()
+        {
+            var message = "Hello, you ordered theese goodies\n";
+            for (var i = 0; i < right.options.length; i+=1)
+            {
+                message += (i+1).toString() +") " + right.options[i].text + '\n'; 
+            }
+            alert(message);
+        }
+    </script>
+
 </body>
